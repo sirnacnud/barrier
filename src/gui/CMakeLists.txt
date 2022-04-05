@@ -21,6 +21,7 @@ set(GUI_COMMON_HEADER_FILES
 
 set(GUI_SOURCE_FILES
     src/AboutDialog.cpp
+    src/AccessibilityPermissionObserver.cpp
     src/ActionDialog.cpp
     src/AddClientDialog.cpp
     src/AppConfig.cpp
@@ -61,6 +62,7 @@ set(GUI_SOURCE_FILES
 
 set(GUI_HEADER_FILES
     src/AboutDialog.h
+    src/AccessibilityPermissionObserver.h
     src/ActionDialog.h
     src/AddClientDialog.h
     src/AppConfig.h

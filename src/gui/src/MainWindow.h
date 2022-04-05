@@ -53,6 +53,7 @@ class QTemporaryFile;
 class QMessageBox;
 class QAbstractButton;
 
+class AccessibilityPermissionObserver;
 class LogDialog;
 class QBarrierApplication;
 class SetupWizard;
@@ -198,6 +199,7 @@ public slots:
         SslCertificate* m_pSslCertificate;
         QStringList m_PendingClientNames;
         LogWindow *m_pLogWindow;
+        AccessibilityPermissionObserver* m_pAccessibilityPermissionObserver;
 
         bool m_fingerprint_expanded = false;
 

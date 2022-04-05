@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 
 #include "AboutDialog.h"
+#include "AccessibilityPermissionObserver.h"
 #include "ServerConfigDialog.h"
 #include "SettingsDialog.h"
 #include "ZeroconfService.h"
@@ -118,7 +119,8 @@ MainWindow::MainWindow(QSettings& settings, AppConfig& appConfig) :
     m_SuppressEmptyServerWarning(false),
     m_ExpectedRunningState(kStopped),
     m_pSslCertificate(NULL),
-    m_pLogWindow(new LogWindow(nullptr))
+    m_pLogWindow(new LogWindow(nullptr)),
+    m_pAccessibilityPermissionObserver(nullptr)
 {
     // explicitly unset DeleteOnClose so the window can be show and hidden
     // repeatedly until Barrier is finished
@@ -503,6 +505,11 @@ void MainWindow::startBarrier()
     bool desktopMode = appConfig().processMode() == Desktop;
     bool serviceMode = appConfig().processMode() == Service;
 
+#if defined(Q_OS_MAC)
+    m_pAccessibilityPermissionObserver = new AccessibilityPermissionObserver(this);
+    m_pAccessibilityPermissionObserver->start();
+#endif
+
     appendLogDebug("starting process");
     m_ExpectedRunningState = kStarted;
     setBarrierState(barrierConnecting);
@@ -767,6 +774,11 @@ void MainWindow::stopBarrier()
 
     // reset so that new connects cause auto-hide.
     m_AlreadyHidden = false;
+
+#if defined(Q_OS_MAC)
+    delete m_pAccessibilityPermissionObserver;
+    m_pAccessibilityPermissionObserver = nullptr;
+#endif
 }
 
 void MainWindow::stopService()
