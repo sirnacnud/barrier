@@ -18,7 +18,6 @@
 #include "AccessibilityPermissionObserver.h"
 
 #include <QApplication>
-#include <QDebug>
 #include <QTimer>
 
 #if defined(Q_OS_MAC)
